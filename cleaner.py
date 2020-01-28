@@ -8,8 +8,8 @@ from pyrogram.api.types.messages import ChannelMessages
 from pyrogram.errors import FloodWait, UnknownError
 
 
-API_ID = getenv('API_ID', None) or int(input('Enter your Telegram API id: '))
-API_HASH = getenv('API_ID', None) or input('Enter your Telegram API hash: ')
+API_ID = 22543
+API_HASH ='6501cd6ce521e6f2d6cb6c1d542d417c'
 
 app = Client("client", api_id=API_ID, api_hash=API_HASH)
 app.start()
