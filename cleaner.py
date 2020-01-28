@@ -44,7 +44,7 @@ class Cleaner:
         return selected_chat, selected_chat_peer
 
     def run(self):
-        while true:
+        while (true):
             q = self.search_messages()
             self.update_ids(q)
             messages_count = len(q.messages)
