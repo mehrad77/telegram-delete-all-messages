@@ -28,7 +28,7 @@ class Cleaner:
         chats = [x for x in dialogs if x.chat.type == 'private']
 
         for i, chat in enumerate(chats):
-            print(f'{i+1}. {chat.chat}')
+            print(f'{i+1}. {chat.chat.first_name}')
 
         print('')
 
