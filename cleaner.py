@@ -24,29 +24,30 @@ class Cleaner:
 
     def select_supergroup(self):
         dialogs = app.get_dialogs()
-        groups = [x for x in dialogs.dialogs if x.chat.type == 'supergroup']
 
-        for i, group in enumerate(groups):
-            print(f'{i+1}. {group.chat.title}')
+        chats = [x for x in dialogs if x.chat.type == 'private']
+
+        for i, chat in enumerate(chats):
+            print(f'{i+1}. {chat.chat}')
 
         print('')
 
-        group_n = int(input('Insert group number: '))
-        selected_group = groups[group_n - 1]
+        chat_n = int(input('Insert chat number: '))
+        selected_chat = chats[chat_n - 1]
 
-        selected_group_peer = app.resolve_peer(selected_group.chat.id)
-        self.peer = selected_group_peer
-        self.chat_id = selected_group.chat.id
+        selected_chat_peer = app.resolve_peer(selected_chat.chat.id)
+        self.peer = selected_chat_peer
+        self.chat_id = selected_chat.chat.id
 
-        print(f'Selected {selected_group.chat.title}\n')
+        print(f'Selected {selected_chat.chat.first_name}\n')
 
-        return selected_group, selected_group_peer
+        return selected_chat, selected_chat_peer
 
     def run(self):
         q = self.search_messages()
         self.update_ids(q)
-        messages_count = q.count
-        print(f'Found {messages_count} your messages in selected supergroup')
+        messages_count = len(q.messages)
+        print(f'Found {messages_count} your messages in selected chat')
 
         if messages_count < 100:
             pass
@@ -74,11 +75,13 @@ class Cleaner:
         return len(query.messages)
 
     def delete_messages(self):
-        print(f'Deleting {len(self.message_ids)} messages with next message IDs:')
+        print(
+            f'Deleting {len(self.message_ids)} messages with next message IDs:')
         print(self.message_ids)
         for message_ids_chunk in self.chunks(self.message_ids, 100):
             try:
-                app.delete_messages(chat_id=self.chat_id, message_ids=message_ids_chunk)
+                app.delete_messages(chat_id=self.chat_id,
+                                    message_ids=message_ids_chunk)
             except FloodWait as flood_exception:
                 sleep(flood_exception.x)
 
