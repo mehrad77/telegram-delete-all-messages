@@ -110,9 +110,9 @@ if __name__ == '__main__':
         deleter = Cleaner()
         deleter.select_supergroup()
         deleter.run()
-         deleter.select_supergroup()
+        deleter.select_supergroup()
         deleter.run()
-         deleter.select_supergroup()
+        deleter.select_supergroup()
         deleter.run()
     except UnknownError as e:
         print(f'UnknownError occured: {e}')
