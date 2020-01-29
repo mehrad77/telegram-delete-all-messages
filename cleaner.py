@@ -44,23 +44,22 @@ class Cleaner:
         return selected_chat, selected_chat_peer
 
     def run(self):
-        while (True):
-            q = self.search_messages()
-            self.update_ids(q)
-            messages_count = len(q.messages)
-            print(f'Found {messages_count} your messages in selected chat')
+        q = self.search_messages()
+        self.update_ids(q)
+        messages_count = len(q.messages)
+        print(f'Found {messages_count} your messages in selected chat')
 
-            if messages_count < 100:
-                pass
-            else:
-                self.add_offset = 100
+        if messages_count < 100:
+            pass
+        else:
+            self.add_offset = 100
 
-                for i in range(0, messages_count, 100):
-                    q = self.search_messages()
-                    self.update_ids(q)
-                    self.add_offset += 100
+            for i in range(0, messages_count, 100):
+                q = self.search_messages()
+                self.update_ids(q)
+                self.add_offset += 100
 
-            self.delete_messages()
+        self.delete_messages()
 
     @staticmethod
     def chunks(l, n):
@@ -110,6 +109,10 @@ if __name__ == '__main__':
     try:
         deleter = Cleaner()
         deleter.select_supergroup()
+        deleter.run()
+         deleter.select_supergroup()
+        deleter.run()
+         deleter.select_supergroup()
         deleter.run()
     except UnknownError as e:
         print(f'UnknownError occured: {e}')
